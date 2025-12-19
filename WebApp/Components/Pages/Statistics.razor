@@ -1,9 +1,60 @@
+@rendermode InteractiveServer
+
 @page "/Statistics"
+@using WebApp.Model
+@using WebApp.Services
+
+@inject IPresentationService PresentationService
 
 <PageTitle>Statistics</PageTitle>
 
 <h1>Statistics</h1>
 
+<EditForm EditContext="context" OnValidSubmit="Submit">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+    <div id="form-container">
+        <div>
+            <label>From</label>
+            <InputDate class="input" Type="InputDateType.DateTimeLocal" @bind-Value="statistics.FromDate"/>
+        </div>
+        <div>
+            <label>To</label>
+            <InputDate class="input" Type="InputDateType.DateTimeLocal" @bind-Value="statistics.ToDate"/>
+        </div>
+        <button id="submit-button">Search</button>
+    </div>
+    @if (presentationCount >= 0)
+    {
+        <p class="presentation-summary">
+            Found <strong>@presentationCount</strong> presentation@((presentationCount == 1) ? "" : "s").
+        </p>
+    }
+</EditForm>
+
 @code {
-    
+    private EditContext? context;
+    private StatisticsDto statistics = new();
+
+    private int presentationCount = -1;
+
+    protected override void OnInitialized()
+    {
+        context = new EditContext(statistics);
+    }
+
+    private async void Submit()
+    {
+        try
+        {
+            presentationCount = await PresentationService.GetPresentationStatistics(statistics.FromDate, statistics.ToDate);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching statistics: {ex.Message}");
+            presentationCount = -1;
+        }
+    }
+
 }

@@ -1,0 +1,20 @@
+#form-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+#form-container > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+#submit-button {
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    border: none;
+    flex: none;
+    align-self: flex-end;
+}

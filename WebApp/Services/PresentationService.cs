@@ -27,7 +27,12 @@ public class PresentationService : IPresentationService
 
     public async Task<int> GetPresentationStatistics(DateTime fromDate, DateTime toDate)
     {
-        var url = $"api/Presentation/statistic?fromdate={fromDate:O}&todate={toDate:O}";
+        //var url = $"api/Presentation/statistic?fromdate={fromDate}&todate={toDate}";
+        
+        var from = Uri.EscapeDataString(fromDate.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+        var to = Uri.EscapeDataString(toDate.ToString("yyyy-MM-ddTHH:mm:ssZ"));
+        var url = $"api/presentation/statistic?fromdate={from}&todate={to}";
+        
         return await httpClient.GetFromJsonAsync<int>(url);
     }
 }
