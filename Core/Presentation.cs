@@ -1,11 +1,13 @@
-﻿namespace Core;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Core;
 
 public record class Presentation
 {
-    public string Name { get; }
-    public DateTime FromDate { get; set; }
-    public DateTime ToDate { get; set; }
-    public string Location { get; set; }
+    [Required] public string Name { get; set; }
+    [Required] public DateTime FromDate { get; set; }
+    [Required] public DateTime ToDate { get; set; }
+    [Required] public string Location { get; set; }
 
     public Presentation(string name, DateTime fromDate, DateTime toDate, string location)
     {

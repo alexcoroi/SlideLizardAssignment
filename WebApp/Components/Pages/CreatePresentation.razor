@@ -1,9 +1,52 @@
-@page "/CreatePresentation"
+@rendermode InteractiveServer
+
+@page "/Create-Presentation"
+@using Core
+@using WebApp.Services
+
+@inject NavigationManager Navigation
+@inject IPresentationService PresentationService
 
 <PageTitle>Create Presentation</PageTitle>
 
 <h1>Create Presentation</h1>
 
+<EditForm EditContext="context" OnValidSubmit="Submit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div id="form-container">
+        <div>
+            <label for="name-input">Name</label>
+            <InputText class="input" @bind-Value="presentation.Name" id="name-input"/>
+        </div>
+        <div>
+            <label for="from-date-input">From</label>
+            <InputDate class="input" Type="InputDateType.DateTimeLocal" @bind-Value="presentation.FromDate" id="from-date-input"/>
+        </div>
+        <div>
+            <label for="to-date-input">To</label>
+            <InputDate class="input" Type="InputDateType.DateTimeLocal" @bind-Value="presentation.ToDate"  id="to-date-input"/>
+        </div>
+        <div>
+            <label for="location-input">Location</label>
+            <InputText class="input" @bind-Value="presentation.Location" id="location-input"/>
+        </div>
+        <button type="submit" class="primary-button">Add Presentation</button>
+    </div>
+</EditForm>
+
 @code {
-    
+    private EditContext? context;
+    private Presentation presentation = new("", DateTime.Now, DateTime.Now.AddHours(1), "");
+
+    protected override void OnInitialized()
+    {
+        context = new EditContext(presentation);
+    }
+
+    private async void Submit()
+    {
+        await PresentationService.AddPresentation(presentation);
+        Navigation.NavigateTo("/");
+    }
 }

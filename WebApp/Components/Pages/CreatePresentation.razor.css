@@ -1,0 +1,17 @@
+#form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+#form-container > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.primary-button {
+    padding: 0.6rem;
+    border-radius: 0.5rem;
+    border: none;
+}

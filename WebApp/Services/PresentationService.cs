@@ -18,4 +18,16 @@ public class PresentationService : IPresentationService
         
         return await response.Content.ReadFromJsonAsync<IEnumerable<Presentation>>();
     }
+
+    public async Task AddPresentation(Presentation presentation)
+    {
+        var response = await httpClient.PostAsJsonAsync("api/Presentation", presentation);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<int> GetPresentationStatistics(DateTime fromDate, DateTime toDate)
+    {
+        var url = $"api/Presentation/statistic?fromdate={fromDate:O}&todate={toDate:O}";
+        return await httpClient.GetFromJsonAsync<int>(url);
+    }
 }

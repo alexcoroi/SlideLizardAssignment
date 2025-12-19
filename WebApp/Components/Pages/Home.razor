@@ -2,6 +2,8 @@
 @using Core
 @using WebApp.Services
 
+@inject IPresentationService PresentationService
+
 <PageTitle>Home</PageTitle>
 
 <h1>Home</h1>
@@ -37,13 +39,10 @@
 </table>
 
 @code {
-    [Inject] public required IPresentationService PresentationService { get; set; }
-
     public List<Presentation> Presentations { get; set; } = new();
 
     protected override async Task OnInitializedAsync()
     {
         Presentations.AddRange(await PresentationService.GetAllPresentations() ?? Array.Empty<Presentation>());
     }
-
 }
