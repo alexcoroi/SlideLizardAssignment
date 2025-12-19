@@ -7,7 +7,6 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        //builder.Services.AddAuthorization();
         
         builder.Services.AddCors(options =>
         {
@@ -34,7 +33,6 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        //app.UseAuthorization();
         app.UseCors();
 
         app.MapControllers();
