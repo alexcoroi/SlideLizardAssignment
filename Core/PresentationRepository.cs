@@ -16,7 +16,8 @@ public class PresentationRepository
 
     public IEnumerable<Presentation> GetPresentationsBetweenDates(DateTime from, DateTime to)
     {
-        return presentations.Where(p => from <= p.FromDate && p.ToDate <= to);
+        return presentations.Where(p => p.FromDate <= to && p.ToDate >= from);
+        
     }
 
     public void Add(Presentation presentation)

@@ -17,7 +17,8 @@
         <th>Location</th>
     </tr>
     </thead>
-    <tbody>@foreach (var presentation in Presentations)
+    <tbody>
+    @foreach (var presentation in Presentations)
     {
         <tr>
             <td>
@@ -45,4 +46,5 @@
     {
         Presentations.AddRange(await PresentationService.GetAllPresentations() ?? Array.Empty<Presentation>());
     }
+
 }
