@@ -1,4 +1,5 @@
 using WebApp.Components;
+using WebApp.Services;
 
 namespace WebApp;
 
@@ -11,6 +12,13 @@ public class Program
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
+        
+        builder.Services.AddScoped(sp => new HttpClient
+        {
+            BaseAddress = new Uri("http://localhost:5144/")
+        });
+        
+        builder.Services.AddScoped<IPresentationService, PresentationService>();
 
         var app = builder.Build();
 

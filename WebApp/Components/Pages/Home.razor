@@ -1,7 +1,49 @@
 ﻿@page "/"
+@using Core
+@using WebApp.Services
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Home</h1>
+<h3>Current presentations</h3>
+<table id="presentations-table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>From</th>
+        <th>To</th>
+        <th>Location</th>
+    </tr>
+    </thead>
+    <tbody>@foreach (var presentation in Presentations)
+    {
+        <tr>
+            <td>
+                @presentation.Name
+            </td>
+            <td>
+                @presentation.FromDate.ToString("g")
+            </td>
+            <td>
+                @presentation.ToDate.ToString("g")
+            </td>
+            <td>
+                @presentation.Location
+            </td>
+        </tr>
+    }
+    </tbody>
 
-Welcome to your new app.
+</table>
+
+@code {
+    [Inject] public required IPresentationService PresentationService { get; set; }
+
+    public List<Presentation> Presentations { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        Presentations.AddRange(await PresentationService.GetAllPresentations() ?? Array.Empty<Presentation>());
+    }
+
+}

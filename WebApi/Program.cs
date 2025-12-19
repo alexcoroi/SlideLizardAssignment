@@ -8,6 +8,16 @@ public class Program
 
         // Add services to the container.
         //builder.Services.AddAuthorization();
+        
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.WithOrigins("http://localhost:5231")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddControllers();
@@ -25,6 +35,7 @@ public class Program
         app.UseHttpsRedirection();
 
         //app.UseAuthorization();
+        app.UseCors();
 
         app.MapControllers();
 
